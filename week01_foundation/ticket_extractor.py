@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from models import CustomerTicket
 
 load_dotenv()
-client = genai.GenerativeAIClient(api_key=os.getenv("GENAI_API_KEY"))
+client = genai.Client(api_key=os.getenv("GENAI_API_KEY"))
 
 raw_ticket_text = """
 Hi, this is John Doe. I am absolutely furious. I was charged twice for my 
@@ -24,9 +24,9 @@ def extract_ticket(text: str) -> CustomerTicket:
         print(f"Attempt {attempt} to extract ticket information...")
 
         #1. Call Gemini
-        response = client.model.generate_content(
-            model="gemini-2.5-flash",
-            content=prompt + error_feedback,
+        response = client.models.generate_content(
+            model='gemini-3.8-flash',
+            contents=prompt + error_feedback,
             config=types.GenerateContentConfig(
                 response_mime_type="application/json",
             )
